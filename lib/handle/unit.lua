@@ -6,6 +6,8 @@ local allUnits = {}
 unit = {}
 unit.metatable = Unit
 
+unit.MAX_COLLISION = 200  -- Maximum collision size for a unit (in gameplay constants)
+
 function unit.wrap(whichUnit)
     if whichUnit then
         local handleId = GetHandleId(whichUnit)
@@ -38,13 +40,13 @@ end
 local function forEach(grp)
     return function()
         local u = FirstOfGroup(grp)
-        if GetUnitTypeId(u) ~= 0 then
-            GroupRemoveUnit(grp, u)
-        end
+        assert(GetUnitTypeId(u) ~= 0, "Invalid unit when populating table. Did you remove a unit from the game in the filter function?")
+        GroupRemoveUnit(grp, u)
         return u
     end
 end
 
+-- Warning: removing a unit  that was enumerated into the group from the game in the filter func will break the iterator.
 local function EnumGroup(filter, enumFunc, ...)
     local result = {}
     local grp = CreateGroup()
@@ -74,14 +76,21 @@ function unit.enumInRect(whichRect, filter)
     return EnumGroup(filter, GroupEnumUnitsInRect, whichRect.handle, nil)
 end
 function unit.enumInRectCounted(whichRect, filter, countLimit)
-    return EnumGroup(filter, GroupEnumUnitsInRect, whichRect.handle, nil, countLimit)
+    return EnumGroup(filter, GroupEnumUnitsInRectCounted, whichRect.handle, nil, countLimit)
 end
 
-function unit.enumInRange(x, y, filter)
+function unit.enumInRange(x, y, radius, filter)
     return EnumGroup(filter, GroupEnumUnitsInRange, x, y, nil)
 end
-function unit.enumInRangeCounted(x, y, filter, countLimit)
-    return EnumGroup(filter, GroupEnumUnitsInRange, x, y, nil, countLimit)
+function unit.enumInRangeCounted(x, y, radius, filter, countLimit)
+    return EnumGroup(filter, GroupEnumUnitsInRangeCounted, x, y, nil, countLimit)
+end
+function unit.enumInCollisionRange(x, y, radius, filter)
+    if filter then
+        return unit.enumInRange(x, y, radius+unit.MAX_COLLISION, function(u) return u:inRangeXY(x, y, radius) and filter(u)) end
+    else
+        return unit.enumInRange(x, y, radius+unit.MAX_COLLISION, function(u) return u:inRangeXY(x, y, radius)) end
+    end
 end
 
 function unit.enumSelected(whichPlayer, filter)
@@ -155,4 +164,16 @@ end
 
 function Unit:getOwner()
     return GetPlayerId(GetOwningPlayer(self.handle))
+end
+
+function Unit:getCollisionSize()
+    return BlzGetUnitCollisionSize(self.handle)
+end
+
+function Unit:inRangeOf(otherUnit, distance)
+    return IsUnitInRange(self.handle, otherUnit.handle, distance)
+end
+
+function Unit:inRangeXY(x, y, distance)
+    return IsUnitInRangeXY(self.handle, x, y, distance)
 end
