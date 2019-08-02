@@ -1,10 +1,13 @@
+region = {}
+
 local Region = {}
 Region.__index = Region
+region.metatable = {}
 
 
-function Region:create()
+function region.create()
     local table = {}
-    setmetatable(table, self)
+    setmetatable(table, Region)
     table.handle = CreateRegion()
     return table
 end
@@ -23,6 +26,3 @@ end
 function Region:clearCell(x, y)
     RegionClearCell(self.handle, x, y)
 end
-
-
-return Region
