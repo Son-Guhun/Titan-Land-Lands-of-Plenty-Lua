@@ -10,19 +10,22 @@ native GetAbilitySoundById          takes integer abilityId, soundtype t returns
 native BlzSetAbilityResearchExtendedTooltip        takes integer abilCode, string researchExtendedTooltip, integer level returns nothing
 native BlzGetAbilityResearchExtendedTooltip        takes integer abilCode, integer level returns string
 ]]--
+abilities = {}
+
 
 local Abilities = {}
 Abilities.__index = Abilities
+abilities.metatable = Abilities
 
 local cachedAbilities = {}
 
-function Abilities:get(abilCode)
+function abilities.get(abilCode)
     local ability = cachedAbilities[abilCode]
     if ability then
         return ability
     else
         ability = {}
-        setmetatable(ability, self)
+        setmetatable(ability, Abilities)
         ability.code = FourCC(abilCode)
         cachedAbilities[abilCode] = ability
         return ability
@@ -109,5 +112,3 @@ end
 function Abilities:BlzGetAbilityCooldown(intLevel)
     return BlzGetAbilityCooldown(self.code, intLevel)
 end
-
-return Abilities

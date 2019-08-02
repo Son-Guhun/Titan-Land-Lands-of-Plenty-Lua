@@ -1,4 +1,4 @@
-local Abilities = require('abilities')
+require('abilities')
 local Rect = require('rect')
 require('UserDefinedRects.rectLightning')
 require('UserDefinedRects.rectWeather')
@@ -77,7 +77,7 @@ local function GetUnitCurrentPage(u)
     return currentPage
 end
 
-Abilities:get(ABILS.PAGE_NEXT):onEffect(function(_, trigU)
+abilities.get(ABILS.PAGE_NEXT):onEffect(function(_, trigU)
     local currentPage = GetUnitCurrentPage(trigU)
 
     for _,abil in ipairs(PAGES[currentPage]) do
@@ -88,7 +88,7 @@ Abilities:get(ABILS.PAGE_NEXT):onEffect(function(_, trigU)
     end
 end)
 
-Abilities:get(ABILS.PAGE_PREV):onEffect(function(_, trigU)
+abilities.get(ABILS.PAGE_PREV):onEffect(function(_, trigU)
     local currentPage = GetUnitCurrentPage(trigU)
 
     for _,abil in ipairs(PAGES[currentPage]) do
@@ -99,7 +99,7 @@ Abilities:get(ABILS.PAGE_PREV):onEffect(function(_, trigU)
     end
 end)
 
-Abilities:get(ABILS.CREATE_OR_DESTROY):onEffect(function(_, trigU)
+abilities.get(ABILS.CREATE_OR_DESTROY):onEffect(function(_, trigU)
     if trigU:hasAttachedRect() then
         trigU:destroyAttachedRect()
     else
@@ -107,33 +107,33 @@ Abilities:get(ABILS.CREATE_OR_DESTROY):onEffect(function(_, trigU)
     end
 end)
 
-Abilities:get(ABILS.MOVE):onEffect(function (_,trigU, target)
+abilities.get(ABILS.MOVE):onEffect(function (_,trigU, target)
     print(target.getX())
     trigU:setPosition(target:getX(), target:getY())
 end)
 
-Abilities:get(ABILS.EXPAND_X):onEffect(function (_, trigU)
+abilities.get(ABILS.EXPAND_X):onEffect(function (_, trigU)
     local rect = trigU._attachedRect
     if rect then
         rect:setWidth(trigU._attachedRect:getWidth() + 64)
     end
 end)
 
-Abilities:get(ABILS.RETRACT_X):onEffect(function (_, trigU)
+abilities.get(ABILS.RETRACT_X):onEffect(function (_, trigU)
     local rect = trigU._attachedRect
     if rect then
         rect:setWidth(trigU._attachedRect:getWidth() - 64)
     end
 end)
 
-Abilities:get(ABILS.EXPAND_Y):onEffect(function (_, trigU)
+abilities.get(ABILS.EXPAND_Y):onEffect(function (_, trigU)
     local rect = trigU._attachedRect
     if rect then
         rect:setHeight(trigU._attachedRect:getHeight() + 64)
     end
 end)
 
-Abilities:get(ABILS.RETRACT_Y):onEffect(function (_, trigU)
+abilities.get(ABILS.RETRACT_Y):onEffect(function (_, trigU)
     local rect = trigU._attachedRect
     if rect then
         rect:setHeight(trigU._attachedRect:getHeight() - 64)
@@ -142,7 +142,7 @@ end)
 
 local weatherList = {'RAhr', 'RAlr', 'MEds', 'FDbh', 'FDbl', 'FDgh', 'FDgl', 'FDrh', 'FDrl', 'FDwh', 'FDwl', 'RLhr', 'RLlr', 'SNbs', 'SNhs', 'SNls', 'WOcw', 'WOlw', 'LRaa', 'LRma', 'WNcw'}
 
-Abilities:get(ABILS.CHANGE_WEATHER_NEXT):onEffect(function (_, trigU)
+abilities.get(ABILS.CHANGE_WEATHER_NEXT):onEffect(function (_, trigU)
     local rect = trigU._attachedRect
     if rect then
         trigU._currentWeather = trigU._currentWeather%#weatherList + 1
@@ -150,7 +150,7 @@ Abilities:get(ABILS.CHANGE_WEATHER_NEXT):onEffect(function (_, trigU)
     end
 end)
 
-Abilities:get(ABILS.CHANGE_WEATHER_PREV):onEffect(function (_, trigU)
+abilities.get(ABILS.CHANGE_WEATHER_PREV):onEffect(function (_, trigU)
     local rect = trigU._attachedRect
     if rect then
         trigU._currentWeather = (trigU._currentWeather - 2)%#weatherList + 1
@@ -158,7 +158,7 @@ Abilities:get(ABILS.CHANGE_WEATHER_PREV):onEffect(function (_, trigU)
     end
 end)
 
-Abilities:get(ABILS.TOGGLE_WEATHER):onEffect(function (_, trigU)
+abilities.get(ABILS.TOGGLE_WEATHER):onEffect(function (_, trigU)
     local rect = trigU._attachedRect
     if rect then
         if rect:hasWeather() then
