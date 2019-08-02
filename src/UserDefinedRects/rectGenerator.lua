@@ -161,6 +161,22 @@ abilities.get(ABILS.TOGGLE_WEATHER):onEffect(function (_, trigU)
     end
 end)
 
+abilities.get(ABILS.LOCK_UNITS):onEffect(function (_, trigU)
+    local rect = trigU._attachedRect
+    if rect then
+        trigU._attachedRectUnits = unit.enumInRect(rect, function(u) return u:getOwner() == 0 end)
+        trigU._attachedRectUnits[trigU] = nil
+    end
+end)
+
+abilities.get(ABILS.UNLOCK_UNITS):onEffect(function (_, trigU)
+    local rect = trigU._attachedRect
+    if rect then
+        trigU._attachedRectUnits = nil
+    end
+end)
+
+
 -- Remove Aatk and Amov on enter map, add first page of abilities
 unitevents.generic:onEnterMap(function(trigU)
     if trigU:getTypeId() == GENERATOR_ID then
@@ -174,9 +190,32 @@ end)
 
 
 local hooks = {}
+local alreadyMoved = nil  -- used to handle recursion when moving generators that have other generators attached to them
 local function updatePosition(unitGenerator)
     if unitGenerator._attachedRect then
+        local oldX,oldY = unitGenerator._attachedRect:getCenterX(),unitGenerator._attachedRect:getCenterY()
         unitGenerator._attachedRect:moveTo(unitGenerator:getX(), unitGenerator:getY())
+
+        if unitGenerator._attachedRectUnits then
+            local first = not alreadyMoved
+            if first then
+                alreadyMoved = {}
+            end
+            alreadyMoved[unitGenerator] = true
+
+            local newX,newY = unitGenerator:getX(),unitGenerator:getY()
+            for u in pairs(unitGenerator._attachedRectUnits) do
+
+                if not alreadyMoved[u] then
+                    alreadyMoved[u] = true
+                    u:setPosition(u:getX() - oldX + newX, u:getY() - oldY + newY)
+                end
+            end
+
+            if first then
+                alreadyMoved = nil
+            end
+        end
     end
 end
 hooks.setX = updatePosition
@@ -201,6 +240,8 @@ function Unit:destroyAttachedRect()
     if self._attachedRect then
         self._attachedRect:destroy()
         self._attachedRect = nil
+        self._attachedRectUnits = nil
+        self._currentWeather = nil
     end
 end
 

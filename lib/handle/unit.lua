@@ -35,6 +35,63 @@ local function toRawCode(int)
 	return res
 end
 
+local function forEach(grp)
+    return function()
+        local u = FirstOfGroup(grp)
+        if GetUnitTypeId(u) ~= 0 then
+            GroupRemoveUnit(grp, u)
+        end
+        return u
+    end
+end
+
+local function EnumGroup(filter, enumFunc, ...)
+    local result = {}
+    local grp = CreateGroup()
+    enumFunc(grp, ...)
+    if filter then
+        for u in forEach(grp) do
+            u = unit.wrap(u)
+            if filter(u) then
+                result[u] = true
+            end
+        end
+    else
+        for u in forEach(grp) do
+            result[unit.wrap(u)] = true
+        end
+    end
+    DestroyGroup(grp)
+    return result
+end
+
+
+function unit.enumOfPlayer(whichPlayer, filter)
+    return EnumGroup(filter, GroupEnumUnitsOfPlayer, whichPlayer.handle, nil)
+end
+
+function unit.enumInRect(whichRect, filter)
+    return EnumGroup(filter, GroupEnumUnitsInRect, whichRect.handle, nil)
+end
+function unit.enumInRectCounted(whichRect, filter, countLimit)
+    return EnumGroup(filter, GroupEnumUnitsInRect, whichRect.handle, nil, countLimit)
+end
+
+function unit.enumInRange(x, y, filter)
+    return EnumGroup(filter, GroupEnumUnitsInRange, x, y, nil)
+end
+function unit.enumInRangeCounted(x, y, filter, countLimit)
+    return EnumGroup(filter, GroupEnumUnitsInRange, x, y, nil, countLimit)
+end
+
+function unit.enumSelected(whichPlayer, filter)
+    return EnumGroup(filter, GroupEnumUnitsSelected, whichPlayer.handle, nil)
+end
+
+
+
+-- --------------------------
+
 function Unit:getTypeId()
     return toRawCode(GetUnitTypeId(self.handle))
 end
@@ -94,4 +151,8 @@ function Unit:removeAbility(strAbilCode)
 end
 function Unit:getAbilityLevel(strAbilCode)
     return GetUnitAbilityLevel(self.handle, FourCC(strAbilCode))
+end
+
+function Unit:getOwner()
+    return GetPlayerId(GetOwningPlayer(self.handle))
 end
