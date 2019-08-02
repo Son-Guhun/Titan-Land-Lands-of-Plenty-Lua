@@ -9,6 +9,7 @@ function weathereffect.create(rect, strEffectId)
     local table = {}
     setmetatable(table, WeatherEffect)
     table.handle = AddWeatherEffect(rect.handle, FourCC(strEffectId))
+    print('handle>',GetHandleId(table.handle),table.handle)
     table._isEnabled = false
     table._typeId = strEffectId
     return table
@@ -25,7 +26,7 @@ function WeatherEffect:isEnabled()
 end
 
 function WeatherEffect:enable(boolEnable)
-    EnableWeatherEffect(effect, boolEnable)
+    EnableWeatherEffect(self.handle, boolEnable)  -- enabling a nil effect will enable the weathereffect with handle id 0
     self._isEnabled = boolEnable
 end
 
