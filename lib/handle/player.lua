@@ -1,13 +1,13 @@
+player = {}
+
 local User = Player
 local Player = {}
 Player.__index = Player
+player.metatable = Player
 
-function Player:fromId(id)
+function player.fromId(id)
     local table = {}
-    setmetatable(table, self)
+    setmetatable(table, Player)
     table.handle = User(id)
     return table
 end
-
-
-return Player
