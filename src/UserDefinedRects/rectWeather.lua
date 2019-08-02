@@ -23,7 +23,6 @@ hookutils.hookTableAfter(hooks, Rect)
 
 function Rect:addWeather(strWeatherId)
     if not self._weatherEffect then
-        print('creating weather')
         self._weatherEffect = weathereffect.create(self, strWeatherId)
         self._weatherEffect:enable(true)
     end

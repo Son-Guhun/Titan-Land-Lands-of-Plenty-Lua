@@ -101,7 +101,6 @@ abilities.get(ABILS.CREATE_OR_DESTROY):onEffect(function(_, trigU)
 end)
 
 abilities.get(ABILS.MOVE):onEffect(function (_,trigU, target)
-    print(target.getX())
     trigU:setPosition(target:getX(), target:getY())
 end)
 
@@ -163,18 +162,14 @@ abilities.get(ABILS.TOGGLE_WEATHER):onEffect(function (_, trigU)
 end)
 
 -- Remove Aatk and Amov on enter map, add first page of abilities
-ceres.addHook('main::after', function()
-    unitevents.generic:onEnterMap(function(trigU)
-        print(trigU:getTypeId())
-        if trigU:getTypeId() == GENERATOR_ID then
-            trigU:removeAbility('Amov')
-            trigU:removeAbility('Aatk')
-            for _,abil in ipairs(PAGES[1]) do
-                print(abil)
-                trigU:addAbility(abil)
-            end
+unitevents.generic:onEnterMap(function(trigU)
+    if trigU:getTypeId() == GENERATOR_ID then
+        trigU:removeAbility('Amov')
+        trigU:removeAbility('Aatk')
+        for _,abil in ipairs(PAGES[1]) do
+            trigU:addAbility(abil)
         end
-    end)
+    end
 end)
 
 
