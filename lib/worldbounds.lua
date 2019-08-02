@@ -1,5 +1,4 @@
-require('handle.rect')
-require('handle.region')
+require('handle')
 
 --  Za Warudo should be empty.
 local metaWorld     = {}

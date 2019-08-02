@@ -1,10 +1,7 @@
-require('handle.lightning')
-require('handle.player')
-require('handle.rect')
-require('handle.region')
-require('handle.unit')
-require('handle.weathereffect')
+require('handle')
 
 require('abilities')
 
 require('hookutils')
+
+require('unitevents.generic')

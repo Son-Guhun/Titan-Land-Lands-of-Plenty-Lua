@@ -2,8 +2,6 @@ require('stdlib')
 require('UserDefinedRects.rectLightning')
 require('UserDefinedRects.rectWeather')
 
-require('unitevents.generic')
-
 local GENERATOR_ID = 'udr0'
 
 local ABILS = {}

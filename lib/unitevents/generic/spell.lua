@@ -1,5 +1,5 @@
 require('unitevents.generic._table')
-require('handle.unit')
+require('handle')
 
 -- TODO: Cache target of spellId after first cast. For Channel spells, check their special fields.
 
