@@ -1,5 +1,4 @@
-local Event = require("unitevents.generic")
-require('unitevents.generic.spell')
+require("unitevents.generic")
 
 -- TODO: Natives to wrap
 --[[
@@ -45,7 +44,7 @@ function Abilities:onEffect(callback)
     funcs[self.code] = callback
 end
 
-Event:onSpellEffect(OnSpellCast)
+unitevents.generic:onSpellEffect(OnSpellCast)
 
 
 -- Tooltip methods

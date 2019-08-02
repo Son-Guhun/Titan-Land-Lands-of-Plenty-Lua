@@ -1,10 +1,8 @@
+require('stdlib')
 require('UserDefinedRects.rectLightning')
 require('UserDefinedRects.rectWeather')
 
-local Event = require('unitevents.generic')
-require('unitevents.generic.entermap')
-
-require('stdlib')
+require('unitevents.generic')
 
 local GENERATOR_ID = 'udr0'
 
@@ -168,7 +166,7 @@ end)
 
 -- Remove Aatk and Amov on enter map, add first page of abilities
 ceres.addHook('main::after', function()
-    Event:onEnterMap(function(trigU)
+    unitevents.generic:onEnterMap(function(trigU)
         print(trigU:getTypeId())
         if trigU:getTypeId() == GENERATOR_ID then
             trigU:removeAbility('Amov')

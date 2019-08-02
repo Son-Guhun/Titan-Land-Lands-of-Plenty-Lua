@@ -1,5 +1,5 @@
+require('unitevents.generic._table')
 require('handle.unit')
-local GenericUnitEvent = require('unitevents.generic')
 
 -- TODO: Cache target of spellId after first cast. For Channel spells, check their special fields.
 
@@ -54,22 +54,22 @@ local function onSpell(event, callback)
     table.insert(onSpellCastFuncs[GetHandleId(event)], callback)
 end
 
-function GenericUnitEvent:onSpellChannel(callback)
+function unitevents.generic:onSpellChannel(callback)
    onSpell(EVENT_PLAYER_UNIT_SPELL_CHANNEL, callback)
 end
 
-function GenericUnitEvent:onSpellCast(callback)
+function unitevents.generic:onSpellCast(callback)
     onSpell(EVENT_PLAYER_UNIT_SPELL_CAST, callback)
 end
 
-function GenericUnitEvent:onSpellEffect(callback)
+function unitevents.generic:onSpellEffect(callback)
     onSpell(EVENT_PLAYER_UNIT_SPELL_EFFECT, callback)
 end
 
-function GenericUnitEvent:onSpellFinish(callback)
+function unitevents.generic:onSpellFinish(callback)
     onSpell(EVENT_PLAYER_UNIT_SPELL_FINISH, callback)
 end
-function GenericUnitEvent:onSpellEndCast(callback)
+function unitevents.generic:onSpellEndCast(callback)
     onSpell(EVENT_PLAYER_UNIT_SPELL_ENDCAST, callback)
 end
 
@@ -83,5 +83,3 @@ if false then
 
     ceres.addHook("main::after", initTest)
 end
-
-return GenericUnitEvent

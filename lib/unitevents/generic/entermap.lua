@@ -1,4 +1,4 @@
-local GenericUnitEvent = require('unitevents.generic')
+require('unitevents.generic._table')
 local worldbounds = require('worldbounds')
 require('handle.unit')
 
@@ -12,7 +12,7 @@ local function OnEnterMap()
     return false
 end
 
-function GenericUnitEvent:onEnterMap(callback)
+function unitevents.generic:onEnterMap(callback)
     table.insert(onEnterMapFuncs, callback)
 end
 

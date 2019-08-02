@@ -1,4 +1,4 @@
-require('stdlib')
+require('handle.rect')
 local Region = require('handle.region')
 
 --  Za Warudo should be empty.
