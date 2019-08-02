@@ -1,7 +1,7 @@
-require('weathereffect')
-local Rect = require('rect')
+local Rect = require('handle.rect')
 local hookutils = require('hookutils')
 
+require('stdlib')
 
 local hooks = {}
 

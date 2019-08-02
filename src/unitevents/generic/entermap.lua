@@ -1,6 +1,6 @@
 local GenericUnitEvent = require('unitevents.generic')
 local worldbounds = require('worldbounds')
-require('unit')
+require('handle.unit')
 
 local onEnterMapFuncs = {}
 

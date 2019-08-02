@@ -1,5 +1,5 @@
-require("unit")
-local Player = require("player")
+require("handle.unit")
+local Player = require("handle.player")
 require('UserDefinedRects.rectGenerator')
 
 

@@ -1,6 +1,7 @@
-local Rect = require("rect")
-require("lightning")
+local Rect = require("handle.rect")
 local hookutils = require('hookutils')
+
+require('stdlib')
 
 local hooks = {}
 

@@ -1,4 +1,4 @@
-require('unit')
+require('handle.unit')
 local GenericUnitEvent = require('unitevents.generic')
 
 -- TODO: Cache target of spellId after first cast. For Channel spells, check their special fields.

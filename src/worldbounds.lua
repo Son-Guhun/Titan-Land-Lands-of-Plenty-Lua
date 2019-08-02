@@ -1,5 +1,5 @@
-local Rect = require('rect')
-local Region = require('region')
+local Rect = require('handle.rect')
+local Region = require('handle.region')
 
 --  Za Warudo should be empty.
 local metaWorld     = {}

@@ -1,5 +1,4 @@
-require('abilities')
-local Rect = require('rect')
+local Rect = require('handle.rect')
 require('UserDefinedRects.rectLightning')
 require('UserDefinedRects.rectWeather')
 
@@ -7,7 +6,7 @@ local Event = require('unitevents.generic')
 require('unitevents.generic.entermap')
 
 local hookutils = require('hookutils')
-require('unit')
+require('stdlib')
 
 local GENERATOR_ID = 'udr0'
 
