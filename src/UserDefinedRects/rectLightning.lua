@@ -1,5 +1,5 @@
 local Rect = require("rect")
-local Lightning = require("lightning")
+require("lightning")
 local hookutils = require('hookutils')
 
 local hooks = {}
@@ -34,10 +34,10 @@ function Rect:addLightning()
         local maxX = self:getMaxX()
         local maxY = self:getMaxY()
 
-        self._lightnings.top = Lightning:create('DRAM', false, minX, maxY, maxX, maxY)
-        self._lightnings.bottom = Lightning:create('DRAM', false, minX, minY, maxX, minY)
-        self._lightnings.left = Lightning:create('DRAM', false, minX, minY, minX, maxY)
-        self._lightnings.right = Lightning:create('DRAM', false, maxX, minY, maxX, maxY)
+        self._lightnings.top = lightning.create('DRAM', false, minX, maxY, maxX, maxY)
+        self._lightnings.bottom = lightning.create('DRAM', false, minX, minY, maxX, minY)
+        self._lightnings.left = lightning.create('DRAM', false, minX, minY, minX, maxY)
+        self._lightnings.right = lightning.create('DRAM', false, maxX, minY, maxX, maxY)
     end
 end
 

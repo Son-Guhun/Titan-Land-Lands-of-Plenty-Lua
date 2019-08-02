@@ -1,4 +1,4 @@
-local WeatherEffect = require('weathereffect')
+require('weathereffect')
 local Rect = require('rect')
 local hookutils = require('hookutils')
 
@@ -11,7 +11,7 @@ function hooks:moveTo()
     if effect then
         local typeId = effect:getTypeId()
         effect:destroy()
-        self._weatherEffect = WeatherEffect:create(self, typeId)
+        self._weatherEffect = weathereffect.create(self, typeId)
         self._weatherEffect:enable(true)
     end
 end
@@ -25,7 +25,8 @@ hookutils.hookTableAfter(hooks, Rect)
 
 function Rect:addWeather(strWeatherId)
     if not self._weatherEffect then
-        self._weatherEffect = WeatherEffect:create(self, strWeatherId)
+        print('creating weather')
+        self._weatherEffect = weathereffect.create(self, strWeatherId)
         self._weatherEffect:enable(true)
     end
 end
@@ -35,7 +36,7 @@ function Rect:changeWeather(strWeatherId)
 
     if effect then
         self._weatherEffect:destroy()
-        self._weatherEffect = WeatherEffect:create(self, strWeatherId)
+        self._weatherEffect = weathereffect.create(self, strWeatherId)
         self._weatherEffect:enable(true)
     end
 end
