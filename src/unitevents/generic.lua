@@ -1,0 +1,2 @@
+local GenericUnitEvent = {}
+return GenericUnitEvent
