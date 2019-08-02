@@ -1,6 +1,9 @@
+rect = {}
+
 local nativeRect = Rect
 local Rect = {}
 Rect.__index = Rect
+rect.metatable = Rect
 
 local function updateValues(rect)
     local handle = rect.handle
@@ -12,17 +15,17 @@ local function updateValues(rect)
     rect._centerY = GetRectCenterY(handle)
 end
 
-function Rect:create(minX, minY, maxX, maxY)
+function rect.create(minX, minY, maxX, maxY)
     local table = {}
-    setmetatable(table, self)
+    setmetatable(table, Rect)
     table.handle = nativeRect(minX, minY, maxX, maxY)
     updateValues(table)
     return table
 end
 
-function Rect:fromWorldBounds()
+function rect.fromWorldBounds()
     local table = {}
-    setmetatable(table, self)
+    setmetatable(table, Rect)
     table.handle = GetWorldBounds()
     updateValues(table)
     return table

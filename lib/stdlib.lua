@@ -6,3 +6,5 @@ require('handle.unit')
 require('handle.weathereffect')
 
 require('abilities')
+
+require('hookutils')

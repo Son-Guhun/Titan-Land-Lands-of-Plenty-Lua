@@ -1,6 +1,3 @@
-local Rect = require("handle.rect")
-local hookutils = require('hookutils')
-
 require('stdlib')
 
 local hooks = {}
@@ -24,6 +21,7 @@ function hooks:destroy()
     self:removeLightning()
 end
 
+local Rect = rect.metatable
 hookutils.hookTableAfter(hooks, Rect)
 
 function Rect:addLightning()

@@ -1,11 +1,9 @@
-local Rect = require('handle.rect')
 require('UserDefinedRects.rectLightning')
 require('UserDefinedRects.rectWeather')
 
 local Event = require('unitevents.generic')
 require('unitevents.generic.entermap')
 
-local hookutils = require('hookutils')
 require('stdlib')
 
 local GENERATOR_ID = 'udr0'
@@ -199,7 +197,7 @@ hookutils.hookTableAfter(hooks, Unit)
 
 function Unit:createAttachedRect()
     if not self._attachedRect then
-        local rect = Rect:create(0,0,64,64)
+        local rect = rect.create(0,0,64,64)
         self._attachedRect = rect
         self._currentWeather = 1
         updatePosition(self)

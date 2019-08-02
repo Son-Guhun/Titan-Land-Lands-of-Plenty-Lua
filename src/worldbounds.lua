@@ -1,4 +1,4 @@
-local Rect = require('handle.rect')
+require('stdlib')
 local Region = require('handle.region')
 
 --  Za Warudo should be empty.
@@ -6,7 +6,7 @@ local metaWorld     = {}
 --World               = makeReadonly(metaWorld, 'World')
 
 ceres.addHook("main::before", function()
-    metaWorld.RECT      = Rect:fromWorldBounds()
+    metaWorld.RECT      = rect.fromWorldBounds()
     metaWorld.REGION       = Region:create()
 
     metaWorld.MAX_X     = metaWorld.RECT.maxX
