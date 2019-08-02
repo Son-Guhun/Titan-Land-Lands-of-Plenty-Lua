@@ -140,7 +140,34 @@ Abilities:get(ABILS.RETRACT_Y):onEffect(function (_, trigU)
     end
 end)
 
+local weatherList = {'RAhr', 'RAlr', 'MEds', 'FDbh', 'FDbl', 'FDgh', 'FDgl', 'FDrh', 'FDrl', 'FDwh', 'FDwl', 'RLhr', 'RLlr', 'SNbs', 'SNhs', 'SNls', 'WOcw', 'WOlw', 'LRaa', 'LRma', 'WNcw'}
 
+Abilities:get(ABILS.CHANGE_WEATHER_NEXT):onEffect(function (_, trigU)
+    local rect = trigU._attachedRect
+    if rect then
+        trigU._currentWeather = trigU._currentWeather%#weatherList + 1
+        rect:changeWeather(weatherList[trigU._currentWeather])
+    end
+end)
+
+Abilities:get(ABILS.CHANGE_WEATHER_PREV):onEffect(function (_, trigU)
+    local rect = trigU._attachedRect
+    if rect then
+        trigU._currentWeather = (trigU._currentWeather - 2)%#weatherList + 1
+        rect:changeWeather(weatherList[trigU._currentWeather])
+    end
+end)
+
+Abilities:get(ABILS.TOGGLE_WEATHER):onEffect(function (_, trigU)
+    local rect = trigU._attachedRect
+    if rect then
+        if rect:hasWeather() then
+            rect:removeWeather()
+        else
+            rect:addWeather(weatherList[trigU._currentWeather])
+        end
+    end
+end)
 
 -- Remove Aatk and Amov on enter map, add first page of abilities
 ceres.addHook('main::after', function()
@@ -157,22 +184,16 @@ ceres.addHook('main::after', function()
     end)
 end)
 
--- --------------------------------
--- Possibly subclass Rect?
 
--- --------------------------------
 local hooks = {}
-
 local function updatePosition(unitGenerator)
     if unitGenerator._attachedRect then
         unitGenerator._attachedRect:moveTo(unitGenerator:getX(), unitGenerator:getY())
     end
 end
-
 hooks.setX = updatePosition
 hooks.setY = updatePosition
 hooks.setPosition = updatePosition
-
 
 local Unit = unit.metatable
 hookutils.hookTableAfter(hooks, Unit)
@@ -181,9 +202,10 @@ function Unit:createAttachedRect()
     if not self._attachedRect then
         local rect = Rect:create(0,0,64,64)
         self._attachedRect = rect
+        self._currentWeather = 1
         updatePosition(self)
         rect:addLightning()
-        rect:addWeather('RAhr')
+        rect:addWeather(weatherList[self._currentWeather])
     end
 end
 

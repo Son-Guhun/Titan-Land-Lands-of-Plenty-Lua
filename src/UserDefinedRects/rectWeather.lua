@@ -49,3 +49,7 @@ function Rect:removeWeather()
         self._weatherEffect = nil
     end
 end
+
+function Rect:hasWeather()
+    if self._weatherEffect then return true else return false end
+end
