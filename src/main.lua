@@ -1,6 +1,6 @@
 require('stdlib')
 require('UserDefinedRects.rectGenerator')
-
+require('Commands.command')
 
 
 
