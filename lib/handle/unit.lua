@@ -87,9 +87,9 @@ function unit.enumInRangeCounted(x, y, radius, filter, countLimit)
 end
 function unit.enumInCollisionRange(x, y, radius, filter)
     if filter then
-        return unit.enumInRange(x, y, radius+unit.MAX_COLLISION, function(u) return u:inRangeXY(x, y, radius) and filter(u)) end
+        return unit.enumInRange(x, y, radius+unit.MAX_COLLISION, function(u) return u:inRangeXY(x, y, radius) and filter(u) end)
     else
-        return unit.enumInRange(x, y, radius+unit.MAX_COLLISION, function(u) return u:inRangeXY(x, y, radius)) end
+        return unit.enumInRange(x, y, radius+unit.MAX_COLLISION, function(u) return u:inRangeXY(x, y, radius) end)
     end
 end
 
