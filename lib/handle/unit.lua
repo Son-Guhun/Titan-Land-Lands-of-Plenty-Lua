@@ -25,7 +25,7 @@ function unit.wrap(whichUnit)
 end
 
 function unit.create(whichPlayer, typeId, x, y, facingDeg)
-    return unit.wrap(CreateUnit(whichPlayer.handle, typeId, x, y, facingDeg))
+    return unit.wrap(CreateUnit(whichPlayer.handle, FourCC(typeId), x, y, facingDeg))
 end
 
 local function toRawCode(int)

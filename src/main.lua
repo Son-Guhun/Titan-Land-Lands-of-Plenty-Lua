@@ -6,6 +6,8 @@ decobuilders = require('LoP.decobuilders')
 
 local decoTentsInitFunc = require('Init.decotents')
 
+require('Commands.Player.decos')
+
 
 
 
@@ -14,7 +16,7 @@ local function a()
     local trig = CreateTrigger()
     TriggerRegisterPlayerChatEvent(trig, player.fromId(0).handle, "-rect", true)
     TriggerAddAction(trig, function()
-        local u = unit.create(player.fromId(0), FourCC('udr0'), 0., 0., 270.)
+        local u = unit.create(player.fromId(0), 'udr0', 0., 0., 270.)
     end)
 
     trig = CreateTrigger()
