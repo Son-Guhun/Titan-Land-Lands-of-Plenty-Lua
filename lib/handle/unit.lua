@@ -40,7 +40,7 @@ end
 local function forEach(grp)
     return function()
         local u = FirstOfGroup(grp)
-        assert(GetUnitTypeId(u) ~= 0, "Invalid unit when populating table. Did you remove a unit from the game in the filter function?")
+        assert(not u or GetUnitTypeId(u) ~= 0, "Invalid unit when populating table. Did you remove a unit from the game in the filter function?")
         GroupRemoveUnit(grp, u)
         return u
     end
