@@ -177,3 +177,7 @@ end
 function Unit:inRangeXY(x, y, distance)
     return IsUnitInRangeXY(self.handle, x, y, distance)
 end
+
+function Unit:issuePointOrder(strOrder, x, y)
+    return IssuePointOrder(self.handle, strOrder, x, y)
+end
