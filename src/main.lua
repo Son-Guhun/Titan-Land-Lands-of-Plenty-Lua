@@ -2,6 +2,9 @@ require('stdlib')
 require('UserDefinedRects.rectGenerator')
 require('Commands.command')
 
+decobuilders = require('LoP.decobuilders')
+
+local decoTentsInitFunc = require('Init.decotents')
 
 
 
@@ -26,3 +29,5 @@ local function a()
 end
 
 ceres.addHook("main::after",  a)
+
+commands.registerCommand('-tents', 0, decoTentsInitFunc)
