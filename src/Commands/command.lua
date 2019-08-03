@@ -1,8 +1,13 @@
 require('stdlib')
-COMMANDS = {}
+
+commands = {}
+commands.ACCESS_USER = 1
+commands.ACCESS_TITAN = 2
+
+local COMMANDS = {}
 
 
-local function registerCommand(str, access, callback)
+function commands.registerCommand(str, access, callback)
 
     if not COMMANDS[str] then
         COMMANDS[str] = callback
@@ -45,4 +50,4 @@ ceres.addHook('main::after', function()
     TriggerAddCondition(trig, Condition(onChatMessage))
 end)
 
-registerCommand('-show', 0, function() print("AAAA") end)
+commands.registerCommand('-show', 0, function() print("AAAA") end)
