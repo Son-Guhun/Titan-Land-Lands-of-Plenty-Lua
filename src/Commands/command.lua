@@ -31,7 +31,10 @@ local function onChatMessage()
 
     local callback = COMMANDS[command]
     if callback then
-        callback(player, command, args)
+        local success, e = pcall(callback, trigPlayer, command, args)
+        if not success then
+            print(e)
+        end
     else
         trigPlayer:displayText('Unrecognized command: ' .. command)
     end
