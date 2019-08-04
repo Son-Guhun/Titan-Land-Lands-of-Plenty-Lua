@@ -5,22 +5,36 @@ local Player = {}
 Player.__index = Player
 player.metatable = Player
 
-allPlayers = {}
+local allPlayerSlots = {}
+local allPlayers = {}
 
 for id=0,bj_MAX_PLAYER_SLOTS-1 do
     local p = {}
     setmetatable(p, Player)
     p.handle = User(id)
-    allPlayers[id] = p
+    allPlayerSlots[id] = p
+    if id < bj_MAX_PLAYERS then allPlayers[id] = p end
 end
 
 function player.wrap(whichPlayer)
-    return allPlayers[GetPlayerId(whichPlayer)]
+    return allPlayerSlots[GetPlayerId(whichPlayer)]
 end
 
 function player.fromId(id)
-    return allPlayers[id]
+    return allPlayerSlots[id]
 end
+
+function player.iterAllSlots()
+    return ipairs(allPlayerSlots)
+end
+
+function player.iterAll()
+    return ipairs(allPlayers)
+end
+
+local localPlayer = nil
+function player.getLocal() return localPlayer end
+ceres.addHook('main::after', function() localPlayer = GetLocalPlayer() end)
 
 function Player:displayTextEx(x, y, ...)
     local sb={}
