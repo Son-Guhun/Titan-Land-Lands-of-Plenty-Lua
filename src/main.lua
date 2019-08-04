@@ -9,7 +9,7 @@ local decoTentsInitFunc = require('Init.decotents')
 require('Commands.Player.decos')
 require('Commands.Player.deleteme')
 
-require('multipatrol')
+require('multipatrol.addons.automatic')
 
 
 

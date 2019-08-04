@@ -51,7 +51,7 @@ function Unit:createPatrolPath(x0, y0, x, y)
         local patrolRegion = region.create()
         self._patrolRegion = patrolRegion
         self._patrolPoints = {{x0,y0},{x,y}}
-        self._currentPatrol = 1
+        self._currentPatrol = 2
 
         PATROL_RECT:moveTo(x, y)
         patrolRegion._patrolUnit = self
@@ -62,13 +62,18 @@ function Unit:createPatrolPath(x0, y0, x, y)
     return false
 end
 
+-- Todo: also check distance to the first patrol point
 function Unit:addPatrolPoint(x, y)
     local patrolPoints = self._patrolPoints
     if patrolPoints then
-        if math.distance(table.unpack(patrolPoints(#patrolPoints)), x, y) > MINIMUM_DISTANCE then
+        if math.distance(x, y, table.unpack(patrolPoints[#patrolPoints])) > MINIMUM_DISTANCE then
             table.insert(patrolPoints, {x,y})
         end
     end
+end
+
+function Unit:hasPatrolPath()
+    if self._patrolPoints then return true else return false end
 end
 
 function Unit:clearPatrolData()
@@ -81,3 +86,5 @@ function Unit:clearPatrolData()
         self._currentPatrol = nil
     end
 end
+
+return multipatrol
