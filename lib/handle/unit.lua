@@ -181,3 +181,47 @@ end
 function Unit:issuePointOrder(strOrder, x, y)
     return IssuePointOrder(self.handle, strOrder, x, y)
 end
+
+
+
+function Unit:setScale(scale)
+    SetUnitScale(self.handle, scale)
+end
+
+function Unit:setVertexColor(intRed, intGreen, intBlue, intAlpha)
+    SetUnitVertexColor(self.handle, intRed, intGreen, intBlue, intAlpha)
+end
+
+function Unit:setColor(playerColor)
+    SetUnitColor(self.handle, playerColor.handle)
+end
+
+function Unit:setTimeScale(scale)
+    SetUnitTimeScale(self.handle, scale)
+end
+
+function Unit:addAnimationProperties(properties, boolAdd)
+    AddUnitAnimationProperties(properties, boolAdd)
+end
+
+function Unit:isHero()
+    return IsUnitType(self.handle, UNIT_TYPE_HERO)
+end
+
+function Unit:isStructure()
+    return IsUnitType(self.handle, UNIT_TYPE_STRUCTURE)
+end
+
+function Unit:getProperName()
+    return GetHeroProperName(self.handle)
+end
+function Unit:setProperName(name)
+    BlzSetHeroProperName(self.handle, name)
+end
+
+function Unit:getName()
+    return GetUnitName(self.handle)
+end
+function Unit:setName(name)
+    BlzSetUnitName(self.handle, name)
+end
