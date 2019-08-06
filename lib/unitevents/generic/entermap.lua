@@ -5,8 +5,9 @@ require('handle')
 local onEnterMapFuncs = {}
 
 local function OnEnterMap()
+    local enteringUnit = unit.wrap(GetFilterUnit())
     for _,func in ipairs(onEnterMapFuncs) do
-        local r,e = pcall(func, unit.wrap(GetFilterUnit()))
+        local r,e = pcall(func, enteringUnit)
         if not r then print(e) end
     end
     return false
