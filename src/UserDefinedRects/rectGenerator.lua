@@ -164,8 +164,9 @@ end)
 abilities.get(ABILS.LOCK_UNITS):onEffect(function (_, trigU)
     local rect = trigU._attachedRect
     if rect then
-        trigU._attachedRectUnits = unit.enumInRect(rect, function(u) return u:getOwner() == 0 end)
-        trigU._attachedRectUnits[trigU] = nil
+        local owner = trigU:getOwner()
+        trigU._attachedRectUnits = unit.enumInRect(rect, function(u) return u:getOwner() == owner end)
+        trigU._attachedRectUnits[trigU] = nil  -- exclude self
     end
 end)
 

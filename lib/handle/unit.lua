@@ -1,3 +1,5 @@
+require('handle.player')
+
 local Unit = {}
 Unit.__index = Unit
 
@@ -163,7 +165,7 @@ function Unit:getAbilityLevel(strAbilCode)
 end
 
 function Unit:getOwner()
-    return GetPlayerId(GetOwningPlayer(self.handle))
+    return player.wrap(GetOwningPlayer(self.handle))
 end
 
 function Unit:getCollisionSize()
@@ -185,7 +187,7 @@ end
 
 
 function Unit:setScale(scale)
-    SetUnitScale(self.handle, scale)
+    SetUnitScale(self.handle, scale, scale, scale)
 end
 
 function Unit:setVertexColor(intRed, intGreen, intBlue, intAlpha)
@@ -201,7 +203,7 @@ function Unit:setTimeScale(scale)
 end
 
 function Unit:addAnimationProperties(properties, boolAdd)
-    AddUnitAnimationProperties(properties, boolAdd)
+    AddUnitAnimationProperties(self.handle, properties, boolAdd)
 end
 
 function Unit:isHero()
