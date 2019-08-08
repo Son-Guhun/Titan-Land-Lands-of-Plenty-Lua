@@ -54,3 +54,5 @@ ceres.addHook('main::after', function()
 end)
 
 commands.registerCommand('-show', 0, function() print("AAAA") end)
+
+return commands
