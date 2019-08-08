@@ -6,14 +6,17 @@ Player.__index = Player
 player.metatable = Player
 
 local allPlayerSlots = {}
-local allPlayers = {}
+
+local iterAllSlots ={}
+local iterAll = {}
 
 for id=0,bj_MAX_PLAYER_SLOTS-1 do
     local p = {}
     setmetatable(p, Player)
     p.handle = User(id)
     allPlayerSlots[id] = p
-    if id < bj_MAX_PLAYERS then allPlayers[id] = p end
+    iterAllSlots[id+1] = p
+    if id < bj_MAX_PLAYERS then iterAll[id+1] = p end
 end
 
 function player.wrap(whichPlayer)
@@ -25,11 +28,11 @@ function player.fromId(id)
 end
 
 function player.iterAllSlots()
-    return ipairs(allPlayerSlots)
+    return pairs(iterAllSlots)
 end
 
 function player.iterAll()
-    return ipairs(allPlayers)
+    return pairs(iterAll)
 end
 
 local localPlayer = nil
