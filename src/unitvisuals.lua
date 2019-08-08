@@ -20,6 +20,11 @@ function Unit:setCustomColor(playerColor)
     self:setColor(playerColor)
 end
 
+function Unit:setCustomTimeScale(scale)
+    self._customTimeScale = scale
+    self:setTimeScale(scale)
+end
+
 local allTags = "gold lumber work flesh ready one two throw slam large medium small victory alternate morph defend swim spin fast upgrade first second third fourth fifth"
 function Unit:setCustomAnimationProperties(properties)
     local currentProps = self._customProperties
