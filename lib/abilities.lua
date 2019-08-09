@@ -1,3 +1,14 @@
+--[[--
+This module defines a metatable which has utility methods for abilities in wc3.
+
+Examples:
+
+local abilObject abilities.get('A000')
+abilObject:onEffect(function() print('Hello world!') end)  -- this will print when the ability is cast
+abilObject:setTooltip('This is a tooltip', 0)
+
+--]]--
+
 require("unitevents.generic")
 
 -- TODO: Natives to wrap
@@ -31,21 +42,42 @@ function abilities.get(abilCode)
     end
 end
 
+---@param event fun(callback:fun(spellId:string,trigU:Unit,target:any))
+---@return fun(spellId:string,trigU:Unit,target:Unit|Destructable|Item|Loc)
+local function createListnerTable(registerFunc)
+    local funcs = {}
+    registerFunc(function(spellId, trigU, target)
+        if funcs[spellId] then
+            funcs[spellId](spellId, trigU, target)
+        end
+    end)
+    return funcs
+end
+
 -- onCast events
-local funcs = {}
+local onCastFuncs    = createListnerTable(unitevents.generic.onSpellCast)
+local onChannelFuncs = createListnerTable(unitevents.generic.onSpellChannel)
+local onEffectFuncs  = createListnerTable(unitevents.generic.onSpellEffect)
+local onFinishFuncs  = createListnerTable(unitevents.generic.onSpellCast)
+local onEndCastFuncs = createListnerTable(unitevents.generic.onSpellCast)
 
-local function OnSpellCast(spellId, trigU, target)
-    if funcs[spellId] then
-        funcs[spellId](spellId, trigU, target)
-    end
+
+
+function Abilities:onCast(callback)
+    onCastFuncs[self.code] = callback
 end
-
+function Abilities:onChannel(callback)
+    onChannelFuncs[self.code] = callback
+end
 function Abilities:onEffect(callback)
-    funcs[self.code] = callback
+    onEffectFuncs[self.code] = callback
 end
-
-unitevents.generic:onSpellEffect(OnSpellCast)
-
+function Abilities:onFinish(callback)
+    onFinishFuncs[self.code] = callback
+end
+function Abilities:onEndCast(callback)
+    onEndCastFuncs[self.code] = callback
+end
 
 -- Tooltip methods
 function Abilities:getTooltip(intLevel)

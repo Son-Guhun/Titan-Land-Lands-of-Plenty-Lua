@@ -54,22 +54,23 @@ local function onSpell(event, callback)
     table.insert(onSpellCastFuncs[GetHandleId(event)], callback)
 end
 
-function unitevents.generic:onSpellChannel(callback)
+---@type function
+function unitevents.generic.onSpellChannel(callback)
    onSpell(EVENT_PLAYER_UNIT_SPELL_CHANNEL, callback)
 end
 
-function unitevents.generic:onSpellCast(callback)
+function unitevents.generic.onSpellCast(callback)
     onSpell(EVENT_PLAYER_UNIT_SPELL_CAST, callback)
 end
 
-function unitevents.generic:onSpellEffect(callback)
+function unitevents.generic.onSpellEffect(callback)
     onSpell(EVENT_PLAYER_UNIT_SPELL_EFFECT, callback)
 end
 
-function unitevents.generic:onSpellFinish(callback)
+function unitevents.generic.onSpellFinish(callback)
     onSpell(EVENT_PLAYER_UNIT_SPELL_FINISH, callback)
 end
-function unitevents.generic:onSpellEndCast(callback)
+function unitevents.generic.onSpellEndCast(callback)
     onSpell(EVENT_PLAYER_UNIT_SPELL_ENDCAST, callback)
 end
 
