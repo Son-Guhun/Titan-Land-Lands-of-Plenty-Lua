@@ -1,19 +1,18 @@
 require('stdlib.handle.__all')
 
---  Za Warudo should be empty.
-local metaWorld     = {}
+worldbounds = {}
 --World               = makeReadonly(metaWorld, 'World')
 
 ceres.addHook("main::before", function()
-    metaWorld.RECT      = rect.fromWorldBounds()
-    metaWorld.REGION       = region.create()
+    worldbounds.RECT      = rect.fromWorldBounds()
+    worldbounds.REGION    = region.create()
 
-    metaWorld.MAX_X     = metaWorld.RECT.maxX
-    metaWorld.MAX_Y     = metaWorld.RECT.maxY
-    metaWorld.MIN_X     = metaWorld.RECT.minX
-    metaWorld.MIN_Y     = metaWorld.RECT.minY
+    worldbounds.MAX_X     = worldbounds.RECT:getMaxX()
+    worldbounds.MAX_Y     = worldbounds.RECT:getMaxY()
+    worldbounds.MIN_X     = worldbounds.RECT:getMinX()
+    worldbounds.MIN_Y     = worldbounds.RECT:getMinY()
 
-    metaWorld.REGION:addRect(metaWorld.RECT)
+    worldbounds.REGION:addRect(worldbounds.RECT)
 end)
 
-return metaWorld
+return worldbounds
