@@ -1,5 +1,6 @@
 require('handle.player')
 
+---@class Unit
 local Unit = {}
 Unit.__index = Unit
 
@@ -10,6 +11,9 @@ unit.metatable = Unit
 
 unit.MAX_COLLISION = 200  -- Maximum collision size for a unit (in gameplay constants)
 
+---Used to wrap a wc3 unit userdata value to a Unit table. Eg.: unit.wrap(GetTriggerUnit())
+---@param whichUnit unit
+---@return Unit
 function unit.wrap(whichUnit)
     if whichUnit then
         local handleId = GetHandleId(whichUnit)
@@ -26,6 +30,12 @@ function unit.wrap(whichUnit)
     end
 end
 
+---@param whichPlayer Player
+---@param typeId string
+---@param x number
+---@param y number
+---@param facingDeg number
+---@return Unit
 function unit.create(whichPlayer, typeId, x, y, facingDeg)
     return unit.wrap(CreateUnit(whichPlayer.handle, FourCC(typeId), x, y, facingDeg))
 end
@@ -49,6 +59,7 @@ local function forEach(grp)
 end
 
 -- Warning: removing a unit  that was enumerated into the group from the game in the filter func will break the iterator.
+---@return table<Unit,boolean>
 local function EnumGroup(filter, enumFunc, ...)
     local result = {}
     local grp = CreateGroup()
@@ -70,23 +81,34 @@ local function EnumGroup(filter, enumFunc, ...)
 end
 
 
+---@param whichPlayer Player
+---@param filter fun(u:Unit):boolean
+---@return fun():Unit,boolean
 function unit.enumOfPlayer(whichPlayer, filter)
     return EnumGroup(filter, GroupEnumUnitsOfPlayer, whichPlayer.handle, nil)
 end
 
+---@param filter fun(u:Unit):boolean
+---@param whichRect Rect
 function unit.enumInRect(whichRect, filter)
     return EnumGroup(filter, GroupEnumUnitsInRect, whichRect.handle, nil)
 end
+---@param whichRect Rect
+---@param filter fun(u:Unit):boolean
 function unit.enumInRectCounted(whichRect, filter, countLimit)
     return EnumGroup(filter, GroupEnumUnitsInRectCounted, whichRect.handle, nil, countLimit)
 end
 
+---@param filter fun(u:Unit):boolean
 function unit.enumInRange(x, y, radius, filter)
     return EnumGroup(filter, GroupEnumUnitsInRange, x, y, nil)
 end
+---@param filter fun(u:Unit):boolean
 function unit.enumInRangeCounted(x, y, radius, filter, countLimit)
     return EnumGroup(filter, GroupEnumUnitsInRangeCounted, x, y, nil, countLimit)
 end
+---Returns a list with 
+---@param filter fun(u:Unit):boolean
 function unit.enumInCollisionRange(x, y, radius, filter)
     if filter then
         return unit.enumInRange(x, y, radius+unit.MAX_COLLISION, function(u) return u:inRangeXY(x, y, radius) and filter(u) end)
@@ -95,6 +117,8 @@ function unit.enumInCollisionRange(x, y, radius, filter)
     end
 end
 
+---@param whichPlayer Player
+---@param filter fun(u:Unit):boolean
 function unit.enumSelected(whichPlayer, filter)
     return EnumGroup(filter, GroupEnumUnitsSelected, whichPlayer.handle, nil)
 end

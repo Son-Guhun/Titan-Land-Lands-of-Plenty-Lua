@@ -15,8 +15,9 @@ local isSystemOrder = false
 
 function multipatrol.isSystemOrder() return isSystemOrder end
 
+---@class Unit
 local Unit = unit.metatable
-function patrolPointReached(whichRegion, trigU)
+local function patrolPointReached(whichRegion, trigU)
     if whichRegion._patrolUnit == trigU then
         local patrolPoints = trigU._patrolPoints
         local nextPoint = trigU._currentPatrol%#patrolPoints + 1
