@@ -1,6 +1,5 @@
 require('unitevents.generic._table')
-local worldbounds = require('worldbounds')
-require('stdlib.handle.__all')
+require('stdlib.worldbounds')
 
 local onEnterMapFuncs = {}
 
