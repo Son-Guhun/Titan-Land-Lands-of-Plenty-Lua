@@ -8,3 +8,6 @@ function hookutils.hookTableAfter(hooks, table)
         table[methodName] = function (...) original(...) callback(...) end
     end
 end
+
+
+return hookutils
