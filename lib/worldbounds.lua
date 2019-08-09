@@ -1,4 +1,4 @@
-require('handle')
+require('stdlib.handle.__all')
 
 --  Za Warudo should be empty.
 local metaWorld     = {}

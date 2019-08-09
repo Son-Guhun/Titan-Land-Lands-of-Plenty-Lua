@@ -1,0 +1,7 @@
+require('stdlib.handle.lightning')
+require('stdlib.handle.player')
+require('stdlib.handle.rect')
+require('stdlib.handle.region')
+require('stdlib.handle.unit')
+require('stdlib.handle.weathereffect')
+require('stdlib.handle.timer')

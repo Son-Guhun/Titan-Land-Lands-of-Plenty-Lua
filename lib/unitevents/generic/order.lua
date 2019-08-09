@@ -1,5 +1,5 @@
 require('unitevents.generic._table')
-require('handle')
+require('stdlib.handle.__all')
 
 local onOrderFuncs = {}
 local onPointOrderFuncs = {}
